@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.annotation.NonNull;
 
 import com.consoliads.mediation.ConsoliAds;
+import com.consoliads.mediation.constants.PlaceholderName;
 
 import java.util.List;
 
@@ -46,10 +47,16 @@ public class ConsoliadspluginPlugin implements FlutterPlugin, MethodCallHandler 
       ConsoliAds.Instance().initialize(devMode, userConsent ,activity , userSignature);
     }
     else if (call.method.equals("loadInterstitial")) {
-      ConsoliAds.Instance().LoadInterstitial();
+      List<Object> arguments = call.arguments();
+      int placeholderValue = (int) arguments.get(0);
+      PlaceholderName placeholderName = PlaceholderName.fromInteger(placeholderValue);
+      ConsoliAds.Instance().LoadInterstitial(placeholderName);
     }
     else if (call.method.equals("showInterstitial")) {
-      ConsoliAds.Instance().ShowInterstitial(activity);
+      List<Object> arguments = call.arguments();
+      int placeholderValue = (int) arguments.get(0);
+      PlaceholderName placeholderName = PlaceholderName.fromInteger(placeholderValue);
+      ConsoliAds.Instance().ShowInterstitial(placeholderName,activity);
     }
     else if (call.method.equals("")) {
       result.success("Android " + android.os.Build.VERSION.RELEASE);

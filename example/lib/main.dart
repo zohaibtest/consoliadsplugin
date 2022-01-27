@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:consoliadsplugin/consoliadsplugin.dart';
+import 'package:consoliadsplugin/constants.dart';
 
 void main() {
+ // final licenseData = LicenseData(copyrightHolderName: 'Consoliads');
+  //print(mit(licenseData));
   runApp(const MyApp());
 }
 
@@ -17,6 +19,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  bool devMode = false;
+  bool userConsent = true;
+  String userSignature = "567f2188d5d283f6fa4fccec99dc6677";
+
   @override
   void initState() {
     super.initState();
@@ -24,57 +30,162 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('ConsoliAds Plugin'),
+          title: const Text('CONSOLIADS SAMPLE'),
         ),
-        body: Center(
+        body: Container(
           child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(
-                child: Text('Int Consoliads'),
-                onPressed: initConsoliAdsSdk,
+              Text(
+                'SAMPLE APP FOR PLUGIN TESTING',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18
+                ), //TextStyle
               ),
-              ElevatedButton(
-                child: Text('Load Interstitial'),
-                onPressed: loadInterstitial,
+              SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'DEVMODE  : ',
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ), //Text
+                  SizedBox(width: 40), //SizedBox
+                  /** Checkbox Widget **/
+                  Checkbox(
+                    value: this.devMode,
+                    onChanged: (value){
+                      setState(() {
+                        this.devMode = value!;
+                      });
+                    }
+                  ), //Checkbox
+                ], //<Widget>[]
               ),
-              ElevatedButton(
-                child: Text('Show Interstitial'),
-                onPressed: showInterstitial,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'USER CONSENT  : ',
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ), //Text
+                  SizedBox(width: 0), //SizedBox
+                  /** Checkbox Widget **/
+                  Checkbox(
+                      value: this.userConsent,
+                      onChanged: (value){
+                        setState(() {
+                          this.userConsent = value!;
+                        });
+                      }
+                  ), //Checkbox
+                ], //<Widget>[]
+              ),
+              MaterialButton(
+                height: 40.0,
+                minWidth: 200.0,
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                child: new Text("INT CONSOLIADS PLUGIN"),
+                onPressed: () {
+                  ConsoliAdsPlugin.instance.initSDK(devMode, userConsent, userSignature);
+                },
+                splashColor: Colors.redAccent,
+              ),
+              SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("LOAD INTERSTITIAL"),
+                    onPressed: () {
+                      ConsoliAdsPlugin.instance.loadInterstitial(PlaceholderName.Default);
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("SHOW INTERSTITIAL"),
+                    onPressed: () {
+                      ConsoliAdsPlugin.instance.showInterstitial(PlaceholderName.Default);
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("LOAD REWARDED"),
+                    onPressed: () {
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("SHOW REWARDED"),
+                    onPressed: () {
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("SHOW BANNER"),
+                    onPressed: () {
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("HIDE BANNER"),
+                    onPressed: () {
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  void initConsoliAdsSdk() {
-    ConsoliAdsPlugin.initSDK(true, true, "567f2188d5d283f6fa4fccec99dc6677");
-  }
-
-  void loadInterstitial() {
-    ConsoliAdsPlugin.loadInterstitial();
-  }
-
-  void showInterstitial() {
-    ConsoliAdsPlugin.showInterstitial();
   }
 }
