@@ -20,9 +20,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
+  String keyTv = "banner";
   bool devMode = false;
   bool userConsent = true;
   String userSignature = "567f2188d5d283f6fa4fccec99dc6677";
+  TextViewController? textViewController = null;
 
   @override
   void initState() {
@@ -30,7 +32,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onTextViewCreated(TextViewController controller) {
-    controller.setText('Hello from Android!');
+    //controller.setText('Hello from Android!');
+    textViewController = controller;
+  }
+  
+  void setText(){
+    textViewController!.setText("my custom text for textview");
   }
 
   @override
@@ -50,6 +57,7 @@ class _MyAppState extends State<MyApp> {
                 height: 130.0,
                 width: 130.0,
                 child: TextView(
+                  key: Key(keyTv),
                   onTextViewCreated: _onTextViewCreated,
                 ),
               ),
@@ -180,6 +188,7 @@ class _MyAppState extends State<MyApp> {
                     textColor: Colors.white,
                     child: new Text("SHOW BANNER"),
                     onPressed: () {
+                      setText();
                     },
                     splashColor: Colors.redAccent,
                   ),

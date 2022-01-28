@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,9 @@ typedef void TextViewCreatedCallback(TextViewController controller);
 
 class TextView extends StatefulWidget {
   const TextView({
+    required Key key,
     required this.onTextViewCreated,
-  }) : super();
+  }) : super(key: key);
 
   final TextViewCreatedCallback onTextViewCreated;
 
@@ -34,13 +34,13 @@ class _TextViewState extends State<TextView> {
     if (widget.onTextViewCreated == null) {
       return;
     }
-    widget.onTextViewCreated(new TextViewController._());
+    widget.onTextViewCreated(new TextViewController._(id));
   }
 }
 
 class TextViewController {
-  TextViewController._()
-      : _channel = new MethodChannel('consoliadsplugin');
+  TextViewController._(int id)
+      : _channel = new MethodChannel('ConsoliadsTextViewController/textview_$id');
 
   final MethodChannel _channel;
 

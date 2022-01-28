@@ -1,6 +1,7 @@
 package com.consoliads.consoliadsplugin;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 import io.flutter.plugin.common.MethodCall;
@@ -16,7 +17,8 @@ public class FlutterTextView implements PlatformView, MethodCallHandler  {
 
     FlutterTextView(Context context, BinaryMessenger messenger, int id) {
         textView = new TextView(context);
-        methodChannel = new MethodChannel(messenger, "consoliadsplugin");
+        textView.setBackgroundColor(Color.parseColor("#FFA07A"));
+        methodChannel = new MethodChannel(messenger, "ConsoliadsTextViewController/textview_" + id);
         methodChannel.setMethodCallHandler(this);
     }
 
