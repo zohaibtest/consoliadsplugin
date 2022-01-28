@@ -48,4 +48,9 @@ class TextViewController {
     assert(text != null);
     return _channel.invokeMethod('setText', text);
   }
+
+  Future<void> destroy() async {
+    return _channel.invokeMethod('destory', "");
+  }
+
 }

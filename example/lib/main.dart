@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:consoliadsplugin/consoliadsplugin.dart';
 import 'package:consoliadsplugin/constants.dart';
 import 'package:consoliadsplugin/text_view.dart';
+import 'package:consoliadsplugin/ca_icon_view.dart';
 
 void main() {
   // final licenseData = LicenseData(copyrightHolderName: 'Consoliads');
@@ -25,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   bool userConsent = true;
   String userSignature = "567f2188d5d283f6fa4fccec99dc6677";
   TextViewController? textViewController = null;
+  ConsoliadsIconAdViewController? iconAdViewController = null;
 
   @override
   void initState() {
@@ -53,14 +55,22 @@ class _MyAppState extends State<MyApp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(vertical: 30.0),
-                height: 130.0,
-                width: 130.0,
+                height: 50.0,
+                width: 320.0,
+                child: ConsoliadsIconAdView(
+                  onIconAdViewCreated: _onIconAdViewCreated,
+                ),
+              ),
+              SizedBox(height: 20),
+              Container(
+                height: 50.0,
+                width: 320.0,
                 child: TextView(
                   key: Key(keyTv),
                   onTextViewCreated: _onTextViewCreated,
                 ),
               ),
+              SizedBox(height: 20),
               Text(
                 'SAMPLE APP FOR PLUGIN TESTING',
                 style: TextStyle(
@@ -199,6 +209,34 @@ class _MyAppState extends State<MyApp> {
                     textColor: Colors.white,
                     child: new Text("HIDE BANNER"),
                     onPressed: () {
+                      textViewController!.destroy();
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("SHOW ICON"),
+                    onPressed: () {
+                      iconAdViewController!.showIconAd(PlaceholderName.Default);
+                    },
+                    splashColor: Colors.redAccent,
+                  ),
+                  MaterialButton(
+                    height: 40.0,
+                    minWidth: 160.0,
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    child: new Text("HIDE ICON"),
+                    onPressed: () {
+                      iconAdViewController!.destroyIconAd();
                     },
                     splashColor: Colors.redAccent,
                   ),
@@ -209,5 +247,9 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void _onIconAdViewCreated(ConsoliadsIconAdViewController controller) {
+
   }
 }
