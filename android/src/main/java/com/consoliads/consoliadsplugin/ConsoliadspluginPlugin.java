@@ -31,6 +31,7 @@ public class ConsoliadspluginPlugin implements FlutterPlugin, MethodCallHandler 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "consoliadsplugin");
+    flutterPluginBinding.getPlatformViewRegistry().registerViewFactory("ConsoliadsTextView", new TextViewFactory(flutterPluginBinding.getBinaryMessenger()));
     channel.setMethodCallHandler(this);
   }
 

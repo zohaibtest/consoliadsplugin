@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:consoliadsplugin/consoliadsplugin.dart';
 import 'package:consoliadsplugin/constants.dart';
+import 'package:consoliadsplugin/text_view.dart';
 
 void main() {
- // final licenseData = LicenseData(copyrightHolderName: 'Consoliads');
+  // final licenseData = LicenseData(copyrightHolderName: 'Consoliads');
   //print(mit(licenseData));
   runApp(const MyApp());
 }
@@ -28,6 +29,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  void _onTextViewCreated(TextViewController controller) {
+    controller.setText('Hello from Android!');
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -40,6 +45,14 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 30.0),
+                height: 130.0,
+                width: 130.0,
+                child: TextView(
+                  onTextViewCreated: _onTextViewCreated,
+                ),
+              ),
               Text(
                 'SAMPLE APP FOR PLUGIN TESTING',
                 style: TextStyle(
@@ -62,12 +75,12 @@ class _MyAppState extends State<MyApp> {
                   SizedBox(width: 40), //SizedBox
                   /** Checkbox Widget **/
                   Checkbox(
-                    value: this.devMode,
-                    onChanged: (value){
-                      setState(() {
-                        this.devMode = value!;
-                      });
-                    }
+                      value: this.devMode,
+                      onChanged: (value){
+                        setState(() {
+                          this.devMode = value!;
+                        });
+                      }
                   ), //Checkbox
                 ], //<Widget>[]
               ),
